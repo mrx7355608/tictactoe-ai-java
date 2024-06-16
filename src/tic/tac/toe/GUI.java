@@ -50,23 +50,27 @@ public class GUI {
 
     public void mainloop() {
         String turn = this.tictactoe.getTurn();
+        
+        String winner = this.tictactoe.checkWinner();
+        if (winner != null) {
+            new GameOver(winner).setVisible(true);
+            this.highlightWinningButtons();
+            this.disableMoves();
+            return;
+        }
 
         if ("computer".equals(turn)) {
             this.tictactoe.computerMakeMove();
             int[] move = this.tictactoe.getComputerMove();
-            System.out.println(move[0]);
             this.updateBoardGui(move[0], move[1], "O");
         }
         
-        String winner = this.tictactoe.checkWinner();
-        if (winner != null) {
-            if (winner.equals("tie")) {
-                label.setText("It's a tie");
-            } else {
-                label.setText(turn + " has won the game!");
-            }
+        String winner2 = this.tictactoe.checkWinner();
+        if (winner2 != null) {
+            new GameOver(winner2).setVisible(true);
             this.highlightWinningButtons();
             this.disableMoves();
+            return;
         }
         
         this.tictactoe.switchTurn();
@@ -86,6 +90,9 @@ public class GUI {
     public JButton createbutton(int row, int col) {
         String data = this.tictactoe.getData(row, col);
         JButton button = new JButton(data);
+        button.setFont(new Font("Fira Code", Font.BOLD, 40));
+        button.setBackground(Color.white);
+        button.setForeground(Color.magenta);
 
         button.addActionListener((ActionEvent e) -> {
             this.tictactoe.makeMove(row, col, "X");
