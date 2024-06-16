@@ -11,6 +11,15 @@ public class TicTacToe {
     private final String humanMark = "X";
     private final String computerMark = "O";
     private final int[] computerMove = new int[2];
+    private static TicTacToe instance;
+    
+    public static TicTacToe getInstance() {
+        if (instance == null) {
+            instance = new TicTacToe();
+        }
+        
+        return instance;
+    }    
 
     public String[][] getGameboard() {
         return gameboard;
