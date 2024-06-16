@@ -4,19 +4,28 @@
  */
 package tic.tac.toe;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author fawad
  */
 public class GameOver extends javax.swing.JFrame {
+
+    TicTacToe tictactoe = new TicTacToe();
+    private final GUI gameGUI;
+
     /**
      * Creates new form GameOver
+     *
      * @param winner
+     * @param gameGui
      */
-    public GameOver(String winner) {
+    public GameOver(String winner, GUI gameGui) {
         initComponents();
         this.setLocationRelativeTo(null);
-        
+        this.gameGUI = gameGui;
+
         System.out.println(winner);
         if ("tie".equals(winner)) {
             gameOverText.setText("It's a tie");
@@ -46,6 +55,11 @@ public class GameOver extends javax.swing.JFrame {
         jLabel1.setText("GAMEOVER");
 
         jButton1.setText("Rematch");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Quit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +117,12 @@ public class GameOver extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.gameGUI.frame.dispose();
+        this.gameGUI.restart();
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel gameOverText;

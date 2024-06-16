@@ -24,6 +24,9 @@ public class GUI {
     JPanel buttonsPanel = new JPanel(new GridLayout(3, 3));
     
     TicTacToe tictactoe = new TicTacToe();
+    
+    public GUI() {
+    }
 
     public void start() {
         this.setupWindow();
@@ -53,7 +56,7 @@ public class GUI {
         
         String winner = this.tictactoe.checkWinner();
         if (winner != null) {
-            new GameOver(winner).setVisible(true);
+            new GameOver(winner, this).setVisible(true);
             this.highlightWinningButtons();
             this.disableMoves();
             return;
@@ -67,7 +70,7 @@ public class GUI {
         
         String winner2 = this.tictactoe.checkWinner();
         if (winner2 != null) {
-            new GameOver(winner2).setVisible(true);
+            new GameOver(winner2, this).setVisible(true);
             this.highlightWinningButtons();
             this.disableMoves();
             return;
@@ -95,10 +98,12 @@ public class GUI {
         button.setForeground(Color.magenta);
 
         button.addActionListener((ActionEvent e) -> {
-            this.tictactoe.makeMove(row, col, "X");
-            this.updateBoardGui(row, col, "X");
-            this.tictactoe.switchTurn();
-            this.mainloop();
+            if (this.tictactoe.isValidMove(row, col)) {
+                this.tictactoe.makeMove(row, col, "X");
+                this.updateBoardGui(row, col, "X");
+                this.tictactoe.switchTurn();
+                this.mainloop();
+            }
         });
 
         return button;
@@ -183,6 +188,12 @@ public class GUI {
         }
         
         return winningIndices;
+    }
+    
+    public void restart(){
+        this.buttonsPanel.removeAll();
+        this.tictactoe.reset();
+        this.start();
     }
     
 }

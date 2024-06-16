@@ -1,9 +1,8 @@
 package tic.tac.toe;
 
-
 public class TicTacToe {
 
-    private final String gameboard[][] = {
+    private String gameboard[][] = {
         {"", "", ""},
         {"", "", ""},
         {"", "", ""}
@@ -12,7 +11,7 @@ public class TicTacToe {
     private final String humanMark = "X";
     private final String computerMark = "O";
     private final int[] computerMove = new int[2];
-    
+
     public String[][] getGameboard() {
         return gameboard;
     }
@@ -24,7 +23,7 @@ public class TicTacToe {
     public String getData(int row, int col) {
         return this.gameboard[row][col];
     }
-    
+
     public void switchTurn() {
         if (this.turn.equals("human")) {
             this.turn = "computer";
@@ -34,12 +33,10 @@ public class TicTacToe {
     }
 
     public void makeMove(int row, int col, String mark) {
-        if (this.isValidMove(row, col)) {
-            this.gameboard[row][col] = mark;
-        }
+        this.gameboard[row][col] = mark;
     }
 
-    private boolean isValidMove(int row, int col) {
+    public boolean isValidMove(int row, int col) {
         return this.gameboard[row][col].isBlank();
     }
 
@@ -113,7 +110,7 @@ public class TicTacToe {
                 }
             }
         }
-        
+
         this.gameboard[bestMoveRow][bestMoveCol] = this.computerMark;
         this.computerMove[0] = bestMoveRow;
         this.computerMove[1] = bestMoveCol;
@@ -178,5 +175,15 @@ public class TicTacToe {
 
     public int[] getComputerMove() {
         return computerMove;
+    }
+
+    public void reset() {
+        String[][] newGameboard = {
+            {"", "", ""},
+            {"", "", ""},
+            {"", "", ""}
+        };
+        this.gameboard = newGameboard;
+        this.turn = "human";
     }
 }
