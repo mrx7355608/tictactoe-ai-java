@@ -2,7 +2,7 @@ package tic.tac.toe;
 
 public class TicTacToe {
 
-    private String gameboard[][] = {
+    private static String gameboard[][] = {
         {"", "", ""},
         {"", "", ""},
         {"", "", ""}
@@ -29,10 +29,6 @@ public class TicTacToe {
         return turn;
     }
 
-    public String getData(int row, int col) {
-        return this.gameboard[row][col];
-    }
-
     public void switchTurn() {
         if (this.turn.equals("human")) {
             this.turn = "computer";
@@ -42,42 +38,42 @@ public class TicTacToe {
     }
 
     public void makeMove(int row, int col, String mark) {
-        this.gameboard[row][col] = mark;
+        gameboard[row][col] = mark;
     }
 
     public boolean isValidMove(int row, int col) {
-        return this.gameboard[row][col].isBlank();
+        return gameboard[row][col].isBlank();
     }
 
     public String checkWinner() {
         // Horizontal checks
         for (int i = 0; i < 3; i++) {
-            if (this.gameboard[i][0].isBlank() == false
-                    && this.gameboard[i][0].equals(this.gameboard[i][1])
-                    && this.gameboard[i][0].equals(this.gameboard[i][2])) {
-                return this.gameboard[i][0];
+            if (gameboard[i][0].isBlank() == false
+                    && gameboard[i][0].equals(gameboard[i][1])
+                    && gameboard[i][0].equals(gameboard[i][2])) {
+                return gameboard[i][0];
             }
         }
 
         // Vertical checks
         for (int i = 0; i < 3; i++) {
-            if (this.gameboard[0][i].isBlank() == false
-                    && this.gameboard[0][i].equals(this.gameboard[1][i])
-                    && this.gameboard[0][i].equals(this.gameboard[2][i])) {
-                return this.gameboard[0][i];
+            if (gameboard[0][i].isBlank() == false
+                    && gameboard[0][i].equals(gameboard[1][i])
+                    && gameboard[0][i].equals(gameboard[2][i])) {
+                return gameboard[0][i];
             }
         }
 
         // Diagonal checks
-        if (this.gameboard[0][0].isBlank() == false
-                && this.gameboard[0][0].equals(this.gameboard[1][1])
-                && this.gameboard[0][0].equals(this.gameboard[2][2])) {
-            return this.gameboard[0][0];
+        if (gameboard[0][0].isBlank() == false
+                && gameboard[0][0].equals(gameboard[1][1])
+                && gameboard[0][0].equals(gameboard[2][2])) {
+            return gameboard[0][0];
         }
-        if (this.gameboard[0][2].isBlank() == false
-                && this.gameboard[0][2].equals(this.gameboard[1][1])
-                && this.gameboard[0][2].equals(this.gameboard[2][0])) {
-            return this.gameboard[0][2];
+        if (gameboard[0][2].isBlank() == false
+                && gameboard[0][2].equals(gameboard[1][1])
+                && gameboard[0][2].equals(gameboard[2][0])) {
+            return gameboard[0][2];
         }
 
         if (this.checkTie()) {
@@ -90,7 +86,7 @@ public class TicTacToe {
     private boolean checkTie() {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (this.gameboard[i][j].isBlank()) {
+                if (gameboard[i][j].isBlank()) {
                     return false;
                 }
             }
@@ -106,10 +102,10 @@ public class TicTacToe {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (this.gameboard[i][j].isBlank()) {
-                    this.gameboard[i][j] = this.computerMark;
+                if (gameboard[i][j].isBlank()) {
+                    gameboard[i][j] = this.computerMark;
                     int score = this.minimax(0, false);
-                    this.gameboard[i][j] = "";
+                    gameboard[i][j] = "";
 
                     if (score > bestScore) {
                         bestScore = score;
@@ -120,7 +116,7 @@ public class TicTacToe {
             }
         }
 
-        this.gameboard[bestMoveRow][bestMoveCol] = this.computerMark;
+        gameboard[bestMoveRow][bestMoveCol] = this.computerMark;
         this.computerMove[0] = bestMoveRow;
         this.computerMove[1] = bestMoveCol;
     }
@@ -145,10 +141,10 @@ public class TicTacToe {
 
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (this.gameboard[i][j].isBlank()) {
-                        this.gameboard[i][j] = "O";
+                    if (gameboard[i][j].isBlank()) {
+                        gameboard[i][j] = "O";
                         int score = minimax(depth + 1, false);
-                        this.gameboard[i][j] = " ";
+                        gameboard[i][j] = " ";
 
                         // Compare scores
                         if (score > bestScore) {
@@ -165,10 +161,10 @@ public class TicTacToe {
 
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (this.gameboard[i][j].isBlank()) {
-                        this.gameboard[i][j] = "X";
+                    if (gameboard[i][j].isBlank()) {
+                        gameboard[i][j] = "X";
                         int score = minimax(depth + 1, true);
-                        this.gameboard[i][j] = " ";
+                        gameboard[i][j] = " ";
 
                         // Compare scores
                         if (score < bestScore) {
@@ -192,7 +188,7 @@ public class TicTacToe {
             {"", "", ""},
             {"", "", ""}
         };
-        this.gameboard = newGameboard;
+        gameboard = newGameboard;
         this.turn = "human";
     }
 }
