@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class BoardUtils {
     private final TicTacToe tictactoe = TicTacToe.getInstance();
-    public int convertToIndex(int row, int col) {
+    private int convertToIndex(int row, int col) {
         return switch (row) {
             case 0 ->
                 col + 0;
