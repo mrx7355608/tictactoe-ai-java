@@ -4,17 +4,29 @@
  */
 package gui;
 
+import java.awt.Font;
+import javax.swing.JLabel;
+
 /**
  *
  * @author fawad
  */
-public class MainMenu extends javax.swing.JFrame {
+public class GameOver extends javax.swing.JFrame {
 
     /**
-     * Creates new form MainMenu
+     * Creates new form GameOver
+     * @param winner
      */
-    public MainMenu() {
+    public GameOver(String winner) {
         initComponents();
+        
+        winnerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        
+        if (winner.equals("tie")) {
+            winnerLabel.setText("It's a tie");
+        } else {
+            winnerLabel.setText(winner + " has won the game!");
+        }
     }
 
     /**
@@ -27,26 +39,17 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        playerVsPlayerButton = new javax.swing.JButton();
-        playerVsComputerButton = new javax.swing.JButton();
-        quitButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        winnerLabel = new javax.swing.JLabel();
+        rematchButton = new javax.swing.JButton();
+        quitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        playerVsPlayerButton.setText("Player vs Player");
-        playerVsPlayerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playerVsPlayerButtonActionPerformed(evt);
-            }
-        });
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setText("GAMEOVER");
 
-        playerVsComputerButton.setText("Player vs Computer");
-        playerVsComputerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playerVsComputerButtonActionPerformed(evt);
-            }
-        });
+        rematchButton.setText("Rematch");
 
         quitButton.setText("Quit");
         quitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -55,42 +58,37 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel1.setText("TIC TAC TOE");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(119, Short.MAX_VALUE)
+                .addContainerGap(112, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(playerVsComputerButton)
-                        .addGap(129, 129, 129))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(playerVsPlayerButton)
-                        .addGap(139, 139, 139))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(82, 82, 82))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addComponent(quitButton)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(101, 101, 101))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(winnerLabel)
+                        .addGap(180, 180, 180))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rematchButton)
+                            .addComponent(quitButton))
+                        .addGap(159, 159, 159))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addComponent(playerVsPlayerButton)
+                .addGap(30, 30, 30)
+                .addComponent(winnerLabel)
+                .addGap(50, 50, 50)
+                .addComponent(rematchButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(playerVsComputerButton)
-                .addGap(12, 12, 12)
                 .addComponent(quitButton)
-                .addGap(35, 35, 35))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -111,15 +109,6 @@ public class MainMenu extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_quitButtonActionPerformed
 
-    private void playerVsPlayerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playerVsPlayerButtonActionPerformed
-        new GameGUI("player-vs-player").setVisible(true);
-    }//GEN-LAST:event_playerVsPlayerButtonActionPerformed
-
-    private void playerVsComputerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playerVsComputerButtonActionPerformed
-        
-        new GameGUI("player-vs-ai").setVisible(true);
-    }//GEN-LAST:event_playerVsComputerButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -137,29 +126,23 @@ public class MainMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameOver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameOver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameOver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GameOver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainMenu().setVisible(true);
-            }
-        });
+        //</editor-fold>
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton playerVsComputerButton;
-    private javax.swing.JButton playerVsPlayerButton;
     private javax.swing.JButton quitButton;
+    private javax.swing.JButton rematchButton;
+    private javax.swing.JLabel winnerLabel;
     // End of variables declaration//GEN-END:variables
 }

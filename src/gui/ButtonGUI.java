@@ -4,7 +4,8 @@
  */
 package gui;
 
-import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JButton;
 import tic.tac.toe.TicTacToe;
 
@@ -16,27 +17,12 @@ public class ButtonGUI extends JButton {
 
     public int row;
     public int col;
-    private TicTacToe tictactoe = TicTacToe.getInstance();
 
-    public ButtonGUI(int row, int col, String data) {
+    public ButtonGUI(int row, int col) {
         this.row = row;
         this.col = col;
-        
-        this.setText(data);
         this.setSize(80, 80);
-        
-        this.addActionListener((ActionEvent e) -> {
-            if (this.tictactoe.isValidMove(row, col)) {
-                this.tictactoe.makeMove(row, col, "X");
-                this.setText("X");
-
-                if (this.tictactoe.checkWinner() != null) {
-                    // Highlight winning line
-                    // Disable moves
-                    // Show gameover screen
-                    // With rematch and quit functions
-                }
-            }
-        });
+        this.setBackground(Color.white);
+        this.setFont(new Font("Arial", Font.BOLD, 40));
     }
 }

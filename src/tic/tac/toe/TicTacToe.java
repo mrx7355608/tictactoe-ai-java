@@ -7,7 +7,7 @@ public class TicTacToe {
         {"", "", ""},
         {"", "", ""}
     };
-    private String turn = "human";
+    private int turn = 1;
     private final String humanMark = "X";
     private final String computerMark = "O";
     private final int[] computerMove = new int[2];
@@ -25,19 +25,19 @@ public class TicTacToe {
         return gameboard;
     }
 
-    public String getTurn() {
+    public int getTurn() {
         return turn;
     }
 
     public void switchTurn() {
-        if (this.turn.equals("human")) {
-            this.turn = "computer";
+        if (this.turn == 1) {
+            this.turn = 2;
         } else {
-            this.turn = "human";
+            this.turn = 1;
         }
     }
 
-    public void makeMove(int row, int col, String mark) {
+    public void updateBoard(int row, int col, String mark) {
         gameboard[row][col] = mark;
     }
 
@@ -189,6 +189,6 @@ public class TicTacToe {
             {"", "", ""}
         };
         gameboard = newGameboard;
-        this.turn = "human";
+        this.turn = 1;
     }
 }
