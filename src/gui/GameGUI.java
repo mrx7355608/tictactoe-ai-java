@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import tic.tac.toe.BoardUtils;
 import tic.tac.toe.TicTacToe;
 
@@ -23,7 +21,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private final TicTacToe tictactoe = TicTacToe.getInstance();
     private final JLabel label = new JLabel();
     private final JPanel panel = new JPanel(new GridLayout(3, 3));
-    private String gameMode;
+    public String gameMode;
     private final BoardUtils boardUtils = new BoardUtils();
 
     public GameGUI(String mode) {
@@ -34,6 +32,7 @@ public class GameGUI extends JFrame implements ActionListener {
         setLayout(new BorderLayout());
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
         // Create a text label
         label.setText("Tic Tac Toe");
@@ -129,7 +128,8 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     private void displayGameOver(String winner) {
-        GameOver gameOverScreen = new GameOver(winner);
+        this.tictactoe.reset();
+        GameOver gameOverScreen = new GameOver(winner, this);
         gameOverScreen.setVisible(true);
     }
 

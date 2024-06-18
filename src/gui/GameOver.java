@@ -11,13 +11,17 @@ import java.awt.Font;
  * @author fawad
  */
 public class GameOver extends javax.swing.JFrame {
+    
+    private GameGUI gameGUI;
 
     /**
      * Creates new form GameOver
      * @param winner
      */
-    public GameOver(String winner) {
+    public GameOver(String winner, GameGUI gameGUI) {
         initComponents();
+        this.gameGUI = gameGUI;
+        this.setLocationRelativeTo(null);
         
         winnerLabel.setFont(new Font("Arial", Font.BOLD, 20));
         
@@ -49,6 +53,11 @@ public class GameOver extends javax.swing.JFrame {
         jLabel1.setText("GAMEOVER");
 
         rematchButton.setText("Rematch");
+        rematchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rematchButtonActionPerformed(evt);
+            }
+        });
 
         quitButton.setText("Quit");
         quitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +116,17 @@ public class GameOver extends javax.swing.JFrame {
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_quitButtonActionPerformed
+
+    private void rematchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rematchButtonActionPerformed
+        // Dispose old game screen
+        this.gameGUI.dispose();
+        
+        // Dispose this gameover screen
+        this.dispose();
+        
+        // Create new game screen
+        new GameGUI(this.gameGUI.gameMode).setVisible(true);
+    }//GEN-LAST:event_rematchButtonActionPerformed
 
     /**
      * @param args the command line arguments
