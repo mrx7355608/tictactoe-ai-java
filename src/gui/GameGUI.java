@@ -9,10 +9,13 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import tic.tac.toe.BoardUtils;
 import tic.tac.toe.TicTacToe;
 
 public class GameGUI extends JFrame implements ActionListener {
@@ -21,6 +24,7 @@ public class GameGUI extends JFrame implements ActionListener {
     private final JLabel label = new JLabel();
     private final JPanel panel = new JPanel(new GridLayout(3, 3));
     private String gameMode;
+    private final BoardUtils boardUtils = new BoardUtils();
 
     public GameGUI(String mode) {
         this.gameMode = mode;
@@ -119,6 +123,7 @@ public class GameGUI extends JFrame implements ActionListener {
         String winner = this.tictactoe.checkWinner();
         if (winner != null) {
             this.disableMoves();
+            this.highlightWinningLine();
             this.displayGameOver(winner);
         }
     }
@@ -132,6 +137,14 @@ public class GameGUI extends JFrame implements ActionListener {
         for (Component component : panel.getComponents()) {
             ButtonGUI button = (ButtonGUI) component;
             button.setEnabled(false);
+        }
+    }
+    
+    private void highlightWinningLine() {
+        for (Object idx : this.boardUtils.discoverWinningIndices()) {
+            int index = (int) idx;
+            ButtonGUI button = (ButtonGUI) panel.getComponent(index);
+            button.setBorder(BorderFactory.createLineBorder(Color.green, 4));
         }
     }
 }
