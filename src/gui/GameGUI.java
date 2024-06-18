@@ -77,9 +77,42 @@ public class GameGUI extends JFrame implements ActionListener {
             return;
         }
 
-        // Otherwise, handle game according to game mode
+        // Otherwise, handle game logic according to game mode
         if ("player-vs-player".equals(this.gameMode)) {
-            if (this.tictactoe.getTurn() == 1) {
+            this.handlePlayerVsPlayer(button);
+        } else {
+            this.handlePlayerVsComputer(button);
+        }
+
+        // Check winner
+        String winner = this.tictactoe.checkWinner();
+        if (winner != null) {
+            this.disableMoves();
+            this.highlightWinningLine();
+            this.displayGameOver(winner);
+        }
+    }
+    
+    private void handlePlayerVsComputer(ButtonGUI button) {
+        // Handle player's move
+            this.tictactoe.updateBoard(button.row, button.col, "X");
+            button.setForeground(Color.red);
+            button.setText("X");
+
+            // Handle computer's move
+            this.tictactoe.computerMakeMove();
+            int[] computerMove = this.tictactoe.getComputerMove();
+            for (Component component : this.panel.getComponents()) {
+                ButtonGUI btn = (ButtonGUI) component;
+                if (btn.row == computerMove[0] && btn.col == computerMove[1]) {
+                    btn.setForeground(Color.cyan);
+                    btn.setText("O");
+                }
+            }
+    }
+
+    private void handlePlayerVsPlayer(ButtonGUI button) {
+        if (this.tictactoe.getTurn() == 1) {
                 this.tictactoe.updateBoard(button.row, button.col, "X");
                 button.setForeground(Color.red);
                 button.setText("X");
@@ -99,34 +132,8 @@ public class GameGUI extends JFrame implements ActionListener {
             } else {
                 label.setText("O's turn");
             }
-
-        } else {
-            // Handle player's move
-            this.tictactoe.updateBoard(button.row, button.col, "X");
-            button.setForeground(Color.red);
-            button.setText("X");
-
-            // Handle computer's move
-            this.tictactoe.computerMakeMove();
-            int[] computerMove = this.tictactoe.getComputerMove();
-            for (Component component : this.panel.getComponents()) {
-                ButtonGUI btn = (ButtonGUI) component;
-                if (btn.row == computerMove[0] && btn.col == computerMove[1]) {
-                    btn.setForeground(Color.cyan);
-                    btn.setText("O");
-                }
-            }
-        }
-
-        // Check winner
-        String winner = this.tictactoe.checkWinner();
-        if (winner != null) {
-            this.disableMoves();
-            this.highlightWinningLine();
-            this.displayGameOver(winner);
-        }
     }
-
+    
     private void displayGameOver(String winner) {
         this.tictactoe.reset();
         GameOver gameOverScreen = new GameOver(winner, this);

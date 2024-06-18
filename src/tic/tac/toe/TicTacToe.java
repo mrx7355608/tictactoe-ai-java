@@ -1,18 +1,22 @@
 package tic.tac.toe;
 
 public class TicTacToe {
-
+    private static TicTacToe instance;
     private static String gameboard[][] = {
         {"", "", ""},
         {"", "", ""},
         {"", "", ""}
     };
     private int turn = 1;
-    private final String humanMark = "X";
-    private final String computerMark = "O";
     private final int[] computerMove = new int[2];
-    private static TicTacToe instance;
     
+    /**
+     * This method returns an existing instance of TicTacToe class.
+     * If instance does not exist, then it creates a new instance and returns it.
+     * Otherwise, returns the existing instance
+     * 
+     * @return The TicTacToe class instance
+     */
     public static TicTacToe getInstance() {
         if (instance == null) {
             instance = new TicTacToe();
@@ -25,6 +29,10 @@ public class TicTacToe {
         return gameboard;
     }
 
+    /**
+     * A getter method for "turn" variable
+     * @return An integer that indicates whose turn it is. 1 -> player one, 2 -> player two
+     */
     public int getTurn() {
         return turn;
     }
@@ -37,14 +45,26 @@ public class TicTacToe {
         }
     }
 
+    /**
+     * Updates board value at specified row and col with players marks "X" or "O"
+     * @param row Row number
+     * @param col Column number
+     * @param mark Player's mark (X/O)
+     */
     public void updateBoard(int row, int col, String mark) {
         gameboard[row][col] = mark;
     }
 
-    public boolean isValidMove(int row, int col) {
-        return gameboard[row][col].isBlank();
-    }
-
+    /**
+     *
+     * @return
+     * 
+     * null value if there is no winner.
+     * 
+     * "tie" if the is a tie
+     * 
+     * X/O if player won
+     */
     public String checkWinner() {
         // Horizontal checks
         for (int i = 0; i < 3; i++) {
@@ -103,7 +123,7 @@ public class TicTacToe {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (gameboard[i][j].isBlank()) {
-                    gameboard[i][j] = this.computerMark;
+                    gameboard[i][j] = "O";
                     int score = this.minimax(0, false);
                     gameboard[i][j] = "";
 
@@ -116,7 +136,7 @@ public class TicTacToe {
             }
         }
 
-        gameboard[bestMoveRow][bestMoveCol] = this.computerMark;
+        gameboard[bestMoveRow][bestMoveCol] = "O";
         this.computerMove[0] = bestMoveRow;
         this.computerMove[1] = bestMoveCol;
     }
@@ -183,12 +203,15 @@ public class TicTacToe {
     }
 
     public void reset() {
+        // Reset board
         String[][] newGameboard = {
             {"", "", ""},
             {"", "", ""},
             {"", "", ""}
         };
         gameboard = newGameboard;
+        
+        // Reset turn
         this.turn = 1;
     }
 }
